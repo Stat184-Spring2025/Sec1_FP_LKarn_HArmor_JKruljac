@@ -1,15 +1,13 @@
-# Project Title
-
-Write a 1-2 sentences that quickly and clearly convey what your repo is for.
+# Work Days Missed due to Illness, Injury, or Disbaility
+This dataset is from the National Center of Health Statisics, it contains data ranging from 2019-2023 regarding the the frequency of missed work due to illness, injury, or disability over the given time period
 
 ## Overview
 
-Expand on those introductory sentences with a brief but informative description of your project's purpose and goals. This section should help visitors decide whether they should dig deeper into your repo/project.
+The goal of this repo is to provide the readers with a statistical summary of the data provided from the National Center of Health Statistics (NCHS). This inlcudes the following summary statistics: (**insert summary statistics here**)
 
 ### Interesting Insight
 
-This is optional but highly recommended. You'll include one interesting insight from your project as part of the README. This insight is most effective when you include a visual. Keep in mind that this visual must be included as an image file (e.g., JPG, PNG, etc.). You can export plots created with `{ggplot2}` by using the function `ggsave`.
-
+We would like to point out a possible association between an increase the number of work days missed and the post-COVID era. While one may jump to the conclustion that an increase in COVID cases may be the cause for an increase in missed work days, increased awarness of disease transmission may be at play.
 ## Repo Structure
 
 Use this section to explain the structure of your repo. This should help visitors quickly figure out where they should look to find certain elements. Further, you can use this space to highlight and briefly explain important/key files in the repo.
@@ -20,4 +18,6 @@ Be sure to list where you got any data used within the project. Be sure to ackno
 
 ## Authors
 
-Give information about who are the authors of the project and how people can get in touch if they have questions.
+Hailey Armor hpa52552@psu.edu
+Lucy Karn lek5494@psu.edu
+Justin Kruljac jck5770@psu.edu
