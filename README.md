@@ -10,7 +10,7 @@ The goal of this repo is to provide the readers with a statistical summary of th
 We would like to point out a possible association between an increase the number of work days missed and the post-COVID era. While one may jump to the conclustion that an increase in COVID cases may be the cause for an increase in missed work days, increased awarness of disease transmission may be at play.
 ## Repo Structure
 
-Use this section to explain the structure of your repo. This should help visitors quickly figure out where they should look to find certain elements. Further, you can use this space to highlight and briefly explain important/key files in the repo.
+In this repo you can find a chart displaying Year vs. Percent of Population that meets the condition of missing 11 or more days of school/work due to injury or sickness as well as a chart displaying the number of recorded COVID cases in New York City by date. 
 
 ## Data Sources and Acknowledgements
 
