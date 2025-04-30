@@ -3,7 +3,7 @@ This dataset is from the National Center of Health Statisics, it contains data r
 
 ## Overview
 
-The goal of this repo is to provide the readers with a statistical summary of the data provided from the National Center of Health Statistics (NCHS). This inlcudes the following summary statistics: (**insert summary statistics here**)
+The goal of this repo is to provide the readers with a statistical insight of the data provided from the National Center of Health Statistics (NCHS). We also would like to compare this data to the number of COVID cases in NYC in the same years. From these two data sets we will calculatate a difference in proportions and determine if it is statistically signifigant. 
 
 ### Interesting Insight
 
