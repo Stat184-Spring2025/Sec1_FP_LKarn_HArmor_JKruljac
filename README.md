@@ -7,7 +7,7 @@ The goal of this repo is to provide the readers with a statistical insight of th
 
 ### Interesting Insight
 
-We would like to point out a possible association between an increase the number of work days missed and the post-COVID era. While one may jump to the conclusion that an increase in COVID cases may be the cause for an increase in missed work days, increased awarness of disease transmission may be a confounding variable in recent years. 
+We would like to point out a possible association between an increase the number of work days missed and the post-COVID era. While one may jump to the conclusion that an increase in COVID cases may be the cause for an increase in missed work days, increased awarness of disease transmission may be a confounding variable in recent years. For additional insight we have included a table displaying COVID hosipitalizations and deaths by year.
 
 ## Fair and Care Principles
 
