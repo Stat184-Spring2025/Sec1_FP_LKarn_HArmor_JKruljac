@@ -3,10 +3,15 @@ title: "Final_Project"
 author: Hailey Armor, Lucy Karn, and Justin Kruljac
 date: 4/29/2025
 date-format: long
-format: pdf
+format:
+  pdf:
+    code: false
+    pdf-engine: lualatex
+    geometry: margin=1in
 ---
-```{r setup, include=FALSE}
- # 1. load libraries
+
+```{r setup, include=FALSE, error=FALSE}
+# 1. load libraries
       
       library(dplyr)
       library(readr)
@@ -14,8 +19,11 @@ format: pdf
       library(lubridate)
       library(knitr)
       library(ggplot2)
+      library(kableExtra)
+      library(tinytex)
 
-      # 2. Tidy missed days of school
+
+# 2. Tidy missed days of school
        
        missed_days <- read_csv("six_or_more_workdays_missed_due_to_illness_injury_or_disability___total___2019_to_2023 (1).csv")
 
@@ -23,7 +31,7 @@ tidy_missed_days <- missed_days %>%
   filter(Subgroup == "18 years and older", Year != 2019) %>%
   select(Year, Missed_Workdays = Estimate)
 
-      #3. Tidy COVID data by year 
+#3. Tidy COVID data by year 
 
 covid <- read_csv("COVID-19_Daily_Counts_of_Cases__Hospitalizations__and_Deaths (1).csv")
 covid <- covid %>%
@@ -41,25 +49,25 @@ covid_summary <- covid %>%
     Total_Deaths = sum(DEATH_COUNT, na.rm = TRUE)
   ) %>%
     filter(Year >= 2020) 
-        # 4. Combine the two tidy tables
-      combined_data <- left_join(tidy_missed_days, covid_summary, by = "Year")
-        # 5. Create graph of COVID Hospitalization and Missed Days of School
-      graph <- ggplot(combined_data, aes(x = Year)) +
-        geom_col(aes(y = Total_Hospitalizations), fill = "lightblue", width = 0.6) +
-        geom_line(aes(y = Missed_Workdays * 10000), color = "red", linewidth = 1.2) +
-        scale_y_continuous(
-          name = "Total Hospitalizations",
-          sec.axis = sec_axis(~./10000, name = "% Missing 6+ Work/school Day")
-        ) +
-        labs(
-          title = "COVID Hospitalizations vs Missed Workdays (2020-2023)",
-          x = "Year"
+# 4. Combine the two tidy tables
+combined_data <- left_join(tidy_missed_days, covid_summary, by = "Year")
+# 5. Create graph of COVID Hospitalization and Missed Days of School
+graph <- ggplot(combined_data, aes(x = Year)) +
+  geom_col(aes(y = Total_Hospitalizations), fill = "lightblue", width = 0.6) +
+  geom_line(aes(y = Missed_Workdays * 10000), color = "red", linewidth = 1.2) +
+  scale_y_continuous(
+    name = "Total Hospitalizations",
+    sec.axis = sec_axis(~./10000, name = "% Missing 6+ Work/school Day")
+  ) +
+  labs(
+    title = "COVID Hospitalizations vs Missed Workdays (2020-2023)",
+    x = "Year"
 
-        ) + 
-        theme_minimal()
+  ) + 
+  theme_minimal()
       
-          # 6. Calculate the correlation
-      correlation <- cor(combined_data$Total_Hospitalizations, combined_data$Missed_Workdays, use = "complete.obs")
+# 6. Calculate the correlation
+correlation <- cor(combined_data$Total_Hospitalizations, combined_data$Missed_Workdays, use = "complete.obs")
 
 cat("Correlation coeffecient for relationship between COVID hospitalizations and missed workdays:", round(correlation, 3))
 ```
@@ -70,9 +78,9 @@ The goal of this repo is to provide the readers with a statistical insight of th
 
 ## Provenance
 
-One data set is from the National Center of Health Statistics, it contains data ranging from 2019-2023 regarding the the frequency of missed work due to illness, injury, or disability over the given time period. The other data set is from NYC Dept. of Health COVID Report and it contains cases of COVID starting in 2020 and records them daily. Each case in this data set is a day, where as each case in the first data set is a year. 
+One data set is from the National Center of Health Statistics, it contains data ranging from 2019-2023 regarding the the frequency of missed work due to illness, injury, or disability over the given time period. The other data set is from NYC Dept. of Health COVID Report and it contains cases of COVID starting in 2020 and records them daily. Each case in this data set is a day, where as each case in the first data set is a year.
 
-We would like to point out a possible association between an increase the number of work days missed and the post-COVID era. The purpose of this doc is to create a correlation table and data visualization for these two data sets to see and prove that there is a correlation between sick days and COVID cases. 
+We would like to point out a possible association between an increase the number of work days missed and the post-COVID era. The purpose of this doc is to create a correlation table and data visualization for these two data sets to see and prove that there is a correlation between sick days and COVID cases.
 
 ## Fair and Care Principles
 
@@ -82,39 +90,52 @@ Our second data set of COVID cases adheres more to the CARE principles. It focus
 
 ## Data Analysis
 
-    ```{r load-missed-days, include=FALSE}
-      print(tidy_missed_days)
-      kable(tidy_missed_days, caption = "Percentage of Adults Missing 6+ Workdays Due to Illness or Injury by Year")
-    ```
-This is our tidy data table for the missed days of school from 2019-2023. @tbl-tidy_missed_days
-    ```{r load-covid-summary, include=FALSE}
-      print(covid_summary)
-    kable(covid_summary, caption = "COVID Hospitalizations and Deaths by Year (2020-2023)")
-    #create captions and title
-    ```
-This is tidy data table for COVID cases per year. @tbl_covid_summary
-      
-    ```{r load-combined-data, include=FALSE}
-      print(combined_data)
-    kable(combined_data, caption = "Covid Hospitalization and Days Missed of School by Year")
-    ```
-This is our combined data table of all our values in a tidy format. @tbl-combined-data
-    ```{r load-final-graph, include=FALSE}
-    print(graph)
-    ```
-This is our graph that represents the ??? @fig_graph
+```{r load-missed-days, echo= FALSE, label=tidy-missed-days}
+kbl(tidy_missed_days, format = "latex", booktabs = TRUE, caption = "Percentage of Adults Missing 6+ Workdays Due to Illness or Injury by Year") %>%
+  kable_styling(latex_options = c("scale_down"), full_width = FALSE, position = "center")
+```
+
+In @tbl-tidy-missed-days, the percent of adults missing 6 or more days of work each year are recorded. This data has been recorded from 2019 to 2023, but this table gets rid of the data from 2019 because it is not relevant to our research question and other data. This table shows us that there is an increase overall since 2020, however the peak year was 2022 and not 2023. This suggests that the there was an increase during 2020, 2021, and 2022, but there is now a decrease according to the 2023 data.
+
+```{r load-covid-summary, echo= FALSE, error=FALSE, label= covid-summary}
+kbl(covid_summary, format = "latex", booktabs = TRUE, caption = "COVID Hospitalizations and Deaths by Year (2020–2023)") %>%
+  kable_styling(latex_options = c("scale_down"), full_width = FALSE, position = "center")
+```
+
+In @tbl-covid-summary, the number of COVID hospitalizations and deaths in NYC is recorded per year. We are using these number to simulate the trend of COVID cases across the nation. This data ranges from 2020 to 2025, but we will only be using data from 2020-2023 to match our other data set. This table shows us that the highest number of hospitalizations and deaths occurred in 2020 and the lowest occurred in 2024 (excluding 2025 because it has not been a full year yet). The table demonstrates how each year the number of deaths and hospitalizations decreases, signifying that as time increases the rate of COVID deaths and hospitalizations will decrease.
+
+```{r load-combined-data, echo= FALSE, error=FALSE, label=combined-data}
+kbl(combined_data, format = "latex", booktabs = TRUE, caption = "Combined COVID Hospitalizations and Missed Workdays by Year") %>%
+  kable_styling(latex_options = c("scale_down"), full_width = FALSE, position = "center")
+```
+
+In @tbl-combined-data, the two previous data sets are merged, so that they each only have data from 2020-2023. This table shows the missed workdays for adults vs. COVID hospitalizations and deaths each year. The side by side numbers allow us to see that the COVID numbers decrease the entire time and the missed workdays increase and then decrease.
+
+```{r load-final-graph, echo=FALSE, error=FALSE, label=graph, fig.cap="COVID Hospitalizations vs Missed Workdays"}
+print(graph)
+```
+
+In @fig-graph, the number of COVID hospitalizations is represented by blue bars at the bottom of the graph and the percent of adults missing 6+ workdays is represented by a red line on the graph. This graph doesn't show any immediate clear explanation or similar patterns, but after looking closer there is a huge decrease from 2022 to 2023 for COVID hospitalization and this is also the only time when percent of adults missing 6+ days of work decreases. There could be correlation, such that when COVID hospitalization are high, the percent of adults missing 6+ days of work increases, but when hospitalizations decreases significantly than the percent of adults missing 6+ workdays will decrease.
+
+```{r correlation, echo=FALSE, label= correlation}
+cat("Correlation coeffecient for relationship between COVID hospitalizations and missed workdays:", round(correlation, 3))
+```
+Talk about correlation coefficient
 
 ## Conclusion
+
+This project showed a connection between COVID hospitalizations and percent of adults that missed 6 or more workdays. While we can not say that one caused the other because causation cannot be proven with correlation alone, we can prove that there was correlation and a pattern. The pattern in the data suggests that the COVID 19 pandemic had an effect on adult's ability to go into work. The Figure shows that missed workdays went up during the peak of the COVID crisis and dropped in 2023 along with the hospitalization signaling that COVID was less of a crisis and less prevalent. The clean and reliable data we used shows that COVID 19 also effected the amount of times adults couldn't go to work, which can cause problems with productivity and job stability. 
+We used the NYC COVID data in this project to simulate the pattern and predicted movement and effects on the population from COVID. We were unable to find a data set that information about COVID cases nationally, so we used this data set instead. This data set's main purpose was mostly to help us visualize and learn the pattern of COVID cases per year. When this data set is used with the nationally collected percent of adults missing 6 or more days of work the pattern can be clearly seen. However there could be error because one data set is only collected city wide instead of nationally, but the city wide data is from a city with over 8 million people, so I think this type of error is most likely not plausible. 
+
 
 ## Data Sources and Acknowledgements
 
 ## Authors
 
-Hailey Armor hpa52552\@psu.edu 
-Lucy Karn lek5494\@psu.edu 
-Justin Kruljac jck5770\@psu.edu
+Hailey Armor hpa52552\@psu.edu Lucy Karn lek5494\@psu.edu Justin Kruljac jck5770\@psu.edu
 
 ## Code Appendix
-    ```{r codeAppendix, ref.label=c("setup", "load-missed-days","load-covid-summary","load-combined-data", "load-final-graph" ), echo=TRUE, eval=FALSE}
+
+```{r codeAppendix, ref.label=c("setup", "load-missed-days","load-covid-summary","load-combined-data", "load-final-graph" ), echo=TRUE, eval=FALSE, error=FALSE}
      
-    ```
+```
