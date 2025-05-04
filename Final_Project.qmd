@@ -5,6 +5,64 @@ date: 4/29/2025
 date-format: long
 format: pdf
 ---
+```{r setup, include=FALSE}
+ # 1. load libraries
+      
+      library(dplyr)
+      library(readr)
+      library(readxl)
+      library(lubridate)
+      library(knitr)
+      library(ggplot2)
+
+      # 2. Tidy missed days of school
+       
+       missed_days <- read_csv("six_or_more_workdays_missed_due_to_illness_injury_or_disability___total___2019_to_2023 (1).csv")
+
+tidy_missed_days <- missed_days %>%
+  filter(Subgroup == "18 years and older", Year != 2019) %>%
+  select(Year, Missed_Workdays = Estimate)
+
+      #3. Tidy COVID data by year 
+
+covid <- read_csv("COVID-19_Daily_Counts_of_Cases__Hospitalizations__and_Deaths (1).csv")
+covid <- covid %>%
+  mutate(date = mdy(date_of_interest))
+
+##Create year column
+covid <- covid %>%
+  mutate(Year = year(date))
+
+##Organize total hospitalizations/deaths by year
+covid_summary <- covid %>%
+  group_by(Year) %>%
+  summarize(
+    Total_Hospitalizations = sum(HOSPITALIZED_COUNT, na.rm = TRUE),
+    Total_Deaths = sum(DEATH_COUNT, na.rm = TRUE)
+  ) %>%
+    filter(Year >= 2020) 
+        # 4. Combine the two tidy tables
+      combined_data <- left_join(tidy_missed_days, covid_summary, by = "Year")
+        # 5. Create graph of COVID Hospitalization and Missed Days of School
+      graph <- ggplot(combined_data, aes(x = Year)) +
+        geom_col(aes(y = Total_Hospitalizations), fill = "lightblue", width = 0.6) +
+        geom_line(aes(y = Missed_Workdays * 10000), color = "red", linewidth = 1.2) +
+        scale_y_continuous(
+          name = "Total Hospitalizations",
+          sec.axis = sec_axis(~./10000, name = "% Missing 6+ Work/school Day")
+        ) +
+        labs(
+          title = "COVID Hospitalizations vs Missed Workdays (2020-2023)",
+          x = "Year"
+
+        ) + 
+        theme_minimal()
+      
+          # 6. Calculate the correlation
+      correlation <- cor(combined_data$Total_Hospitalizations, combined_data$Missed_Workdays, use = "complete.obs")
+
+cat("Correlation coeffecient for relationship between COVID hospitalizations and missed workdays:", round(correlation, 3))
+```
 
 ## Overview
 
@@ -22,7 +80,29 @@ Our main data set of number of people under 18 taking a sick day from school adh
 
 Our second data set of COVID cases adheres more to the CARE principles. It focuses more on data collected for collective benefit and for the government to use to track COVID. While this data set doesn't exactly capture or reflect directly on other cultures and worldviews, it can be used to draw conclusions about COVID that relate to how COVID is moving worldwide. This data set was collected ethically and is going to be for future use.
 
-## Data Visualizations
+## Data Analysis
+
+    ```{r load-missed-days, include=FALSE}
+      print(tidy_missed_days)
+      kable(tidy_missed_days, caption = "Percentage of Adults Missing 6+ Workdays Due to Illness or Injury by Year")
+    ```
+This is our tidy data table for the missed days of school from 2019-2023. @tbl-tidy_missed_days
+    ```{r load-covid-summary, include=FALSE}
+      print(covid_summary)
+    kable(covid_summary, caption = "COVID Hospitalizations and Deaths by Year (2020-2023)")
+    #create captions and title
+    ```
+This is tidy data table for COVID cases per year. @tbl_covid_summary
+      
+    ```{r load-combined-data, include=FALSE}
+      print(combined_data)
+    kable(combined_data, caption = "Covid Hospitalization and Days Missed of School by Year")
+    ```
+This is our combined data table of all our values in a tidy format. @tbl-combined-data
+    ```{r load-final-graph, include=FALSE}
+    print(graph)
+    ```
+This is our graph that represents the ??? @fig_graph
 
 ## Conclusion
 
@@ -33,3 +113,8 @@ Our second data set of COVID cases adheres more to the CARE principles. It focus
 Hailey Armor hpa52552\@psu.edu 
 Lucy Karn lek5494\@psu.edu 
 Justin Kruljac jck5770\@psu.edu
+
+## Code Appendix
+    ```{r codeAppendix, ref.label=c("setup", "load-missed-days","load-covid-summary","load-combined-data", "load-final-graph" ), echo=TRUE, eval=FALSE}
+     
+    ```
