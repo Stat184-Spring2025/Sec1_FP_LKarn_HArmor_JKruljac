@@ -111,7 +111,7 @@ kbl(combined_data, format = "latex", booktabs = TRUE, caption = "Combined COVID 
 
 In @tbl-combined-data, the two previous data sets are merged, so that they each only have data from 2020-2023. This table shows the missed workdays for adults vs. COVID hospitalizations and deaths each year. The side by side numbers allow us to see that the COVID numbers decrease the entire time and the missed workdays increase and then decrease.
 
-```{r load-final-graph, echo=FALSE, error=FALSE, label=graph, fig.cap="COVID Hospitalizations vs Missed Workdays"}
+```{r load-final-graph, echo=FALSE, error=FALSE, label=graph, fig.cap="COVID Hospitalizations vs Missed Workdays, fig.align="center"}
 print(graph)
 ```
 
