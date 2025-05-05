@@ -13,6 +13,7 @@ This repository contains a Quarto document, which allows the viewer to read an o
 
 NCHS Data Query System. Six or more workdays missed due to illness, injury, or disability [Internet]. Hyattsville (MD): National Center for Health Statistics; c2024 [cited 2025 May 4]. Available from: https://www.cdc.gov/nchs/dqs
 
+U.S. Department of Health and Human Services. COVID-19 daily counts of cases, hospitalizations, and deaths [Internet]. Washington (DC): Data.gov; [cited 2025 May 4]. Available from: https://catalog.data.gov/dataset/covid-19-daily-counts-of-cases-hospitalizations-and-deaths
 
 ## Authors
 
