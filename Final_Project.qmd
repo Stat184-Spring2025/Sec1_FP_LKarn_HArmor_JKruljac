@@ -90,34 +90,56 @@ Our second data set of COVID cases adheres more to the CARE principles. It focus
 
 ## Data Analysis
 
-```{r load-missed-days, echo= FALSE, label=tidy-missed-days}
-kbl(tidy_missed_days, format = "latex", booktabs = TRUE, caption = "Percentage of Adults Missing 6+ Workdays Due to Illness or Injury by Year") %>%
+```{r}
+#| label: tbl-tidy-missed-days
+#| tbl-cap: "Percentage of Adults Missing 6+ Workdays Due to Illness or Injury by Year"
+#| echo: false
+#| error: false
+#| 
+kbl(tidy_missed_days, format = "latex", booktabs = TRUE) %>%
   kable_styling(latex_options = c("scale_down"), full_width = FALSE, position = "center")
 ```
 
 In @tbl-tidy-missed-days, the percent of adults missing 6 or more days of work each year are recorded. This data has been recorded from 2019 to 2023, but this table gets rid of the data from 2019 because it is not relevant to our research question and other data. This table shows us that there is an increase overall since 2020, however the peak year was 2022 and not 2023. This suggests that the there was an increase during 2020, 2021, and 2022, but there is now a decrease according to the 2023 data.
 
-```{r load-covid-summary, echo= FALSE, error=FALSE, label= covid-summary}
-kbl(covid_summary, format = "latex", booktabs = TRUE, caption = "COVID Hospitalizations and Deaths by Year (2020–2023)") %>%
+```{r}
+#| label: tbl-covid-summary
+#| tbl-cap: "COVID Hospitalizations and Deaths by Year (2020–2023)"
+#| echo: false
+#| error: false
+
+kbl(covid_summary, format = "latex", booktabs = TRUE) %>%
   kable_styling(latex_options = c("scale_down"), full_width = FALSE, position = "center")
 ```
 
 In @tbl-covid-summary, the number of COVID hospitalizations and deaths in NYC is recorded per year. We are using these number to simulate the trend of COVID cases across the nation. This data ranges from 2020 to 2025, but we will only be using data from 2020-2023 to match our other data set. This table shows us that the highest number of hospitalizations and deaths occurred in 2020 and the lowest occurred in 2024 (excluding 2025 because it has not been a full year yet). The table demonstrates how each year the number of deaths and hospitalizations decreases, signifying that as time increases the rate of COVID deaths and hospitalizations will decrease.
 
-```{r load-combined-data, echo= FALSE, error=FALSE, label=combined-data}
-kbl(combined_data, format = "latex", booktabs = TRUE, caption = "Combined COVID Hospitalizations and Missed Workdays by Year") %>%
+```{r}
+#| label: tbl-combined-data
+#| tbl-cap: "Combined COVID Hospitalizations and Missed Workdays by Year"
+#| echo: false
+#| error: false
+kbl(combined_data, format = "latex", booktabs = TRUE) %>%
   kable_styling(latex_options = c("scale_down"), full_width = FALSE, position = "center")
 ```
 
 In @tbl-combined-data, the two previous data sets are merged, so that they each only have data from 2020-2023. This table shows the missed workdays for adults vs. COVID hospitalizations and deaths each year. The side by side numbers allow us to see that the COVID numbers decrease the entire time and the missed workdays increase and then decrease.
 
-```{r load-final-graph, echo=FALSE, error=FALSE, label=graph, fig.cap="COVID Hospitalizations vs Missed Workdays, fig.align="center"}
+```{r}
+#| label: fig-graph
+#| fig-cap: "COVID Hospitalizations vs Missed Workdays"
+#| fig-align: "center"
+#| echo: false
+#| error: false
 print(graph)
 ```
 
 In @fig-graph, the number of COVID hospitalizations is represented by blue bars at the bottom of the graph and the percent of adults missing 6+ workdays is represented by a red line on the graph. This graph doesn't show any immediate clear explanation or similar patterns, but after looking closer there is a huge decrease from 2022 to 2023 for COVID hospitalization and this is also the only time when percent of adults missing 6+ days of work decreases. There could be correlation, such that when COVID hospitalization are high, the percent of adults missing 6+ days of work increases, but when hospitalizations decreases significantly than the percent of adults missing 6+ workdays will decrease.
 
-```{r correlation, echo=FALSE, label= correlation}
+```{r}
+#| label: correlation
+#| echo: false
+#| error: false
 cat("Correlation coeffecient for relationship between COVID hospitalizations and missed workdays:", round(correlation, 3))
 ```
 Talk about correlation coefficient
@@ -132,7 +154,10 @@ The NYC COVID data in this project is used to simulate the pattern and predicted
 ## Data Sources and Acknowledgements
 
 Data from:
-National Center of Health Statistics (NCHS) and NYC Dept. of Health
+
+NCHS Data Query System. Six or more workdays missed due to illness, injury, or disability [Internet]. Hyattsville (MD): National Center for Health Statistics; c2024 [cited 2025 May 4]. Available from: https://www.cdc.gov/nchs/dqs
+
+U.S. Department of Health and Human Services. COVID-19 daily counts of cases, hospitalizations, and deaths [Internet]. Washington (DC): Data.gov; [cited 2025 May 4]. Available from: https://catalog.data.gov/dataset/covid-19-daily-counts-of-cases-hospitalizations-and-deaths
 
 ## Authors
 
